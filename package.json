@@ -1,0 +1,17 @@
+{
+  "name": "kaos-bot-novo",
+  "version": "1.0.0",
+  "description": "Bot KAOS recriado para novo server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "commonjs"
+}

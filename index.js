@@ -80,7 +80,7 @@ const roleEmbed = (userTag, avatarURL, roleName, type, color, moderator, joinedD
         ],
         title: 'Atualização de Cargo',
         timestamp: new Date(),
-        footer: { text: 'TD2' }
+        footer: { text: 'Moderação do WebHyperTD2' }
     };
 };
 
@@ -96,7 +96,7 @@ client.on('messageCreate', async (message) => {
     if (firstWord === 'cl' || firstWord === 'clear' || firstWord === 'limpar') {
         if (!message.member.permissions.has('ManageMessages')) return; // silencioso se sem permissão
 
-        const amount = 4; // fixo em 4 mensagens do usuário
+        const amount = 20; // agora fixo em 20 msgs
 
         try {
             // Busca mensagens recentes no canal
@@ -130,6 +130,26 @@ client.on('messageCreate', async (message) => {
     // w!ping
     if (commandName === 'ping') {
         await message.reply('WebHyperTD2 online!');
+    }
+
+    // w!av [@user] — avatar curto
+    if (commandName === 'av') {
+        const member = message.mentions.members.first() || message.member;
+        const avatarURL = member.user.displayAvatarURL({ size: 1024, dynamic: true });
+        const embed = {
+            color: 0x9b59b6,
+            title: `Avatar de ${member.user.tag}`,
+            image: { url: avatarURL },
+            footer: { text: 'Clique para ampliar' }
+        };
+        message.channel.send({ embeds: [embed] });
+    }
+
+    // w!killslow ou w!killslowmode — remove slowmode
+    if (commandName === 'killslow' || commandName === 'killslowmode') {
+        if (!message.member.permissions.has('ManageChannels')) return message.reply('Você não tem permissão para gerenciar canais.');
+        await message.channel.setRateLimitPerUser(0);
+        message.reply('Slowmode removido deste canal.');
     }
 
     // w!ban @user [razão]
@@ -238,7 +258,7 @@ client.on('messageCreate', async (message) => {
                     { name: 'Razão do desban', value: reason, inline: false }
                 ],
                 timestamp: new Date(),
-                footer: { text: 'TD2' }
+                footer: { text: 'Moderação do WebHyperTD2' }
             };
             await message.channel.send({ embeds: [embed] });
         } catch {
@@ -285,7 +305,7 @@ client.on('messageCreate', async (message) => {
             title: 'Aviso Recebido',
             description: `**Servidor:** ${message.guild.name}\n**Razão:** ${reason}\n**Moderador:** ${message.author.tag}`,
             timestamp: new Date(),
-            footer: { text: 'TD2' }
+            footer: { text: 'Moderação do WebHyperTD2' }
         };
         try {
             await member.send({ embeds: [warnEmbed] });
@@ -293,19 +313,6 @@ client.on('messageCreate', async (message) => {
         } catch {
             message.reply(`${member.user.tag} foi avisado (privado fechado).`);
         }
-    }
-
-    // w!av [@user] — antigo avatar, agora com prefixo curto
-    if (commandName === 'av') {
-        const member = message.mentions.members.first() || message.member;
-        const avatarURL = member.user.displayAvatarURL({ size: 1024, dynamic: true });
-        const embed = {
-            color: 0x9b59b6,
-            title: `Avatar de ${member.user.tag}`,
-            image: { url: avatarURL },
-            footer: { text: 'Clique para ampliar' }
-        };
-        message.channel.send({ embeds: [embed] });
     }
 
     // w!serverinfo ou w!info
@@ -324,7 +331,7 @@ client.on('messageCreate', async (message) => {
                 { name: 'ID', value: `${guild.id}`, inline: false }
             ],
             timestamp: new Date(),
-            footer: { text: 'TD2' }
+            footer: { text: 'Moderação do WebHyperTD2' }
         };
         message.channel.send({ embeds: [embed] });
     }
@@ -363,9 +370,9 @@ client.on('messageCreate', async (message) => {
             await channel.delete();
             await newChannel.setPosition(position);
             if (parent) await newChannel.setParent(parent);
-            newChannel.send('canal moggado kkkkkkkk its over dms');
+            newChannel.send('Canal nukado e recriado! Tudo limpo.');
         } catch {
-            message.reply('nao vou jkk otario');
+            message.reply('Erro ao nukar.');
         }
     }
 });
@@ -373,7 +380,7 @@ client.on('messageCreate', async (message) => {
 // Login
 client.login(process.env.TOKEN);
 
-// Express
+// Express (mantém o bot acordado 24/7 no Render)
 const app = express();
 app.get('/', (req, res) => res.send('Bot online! WebHyperTD2 está vivo!'));
 app.listen(process.env.PORT || 3000, () => console.log(`Servidor web rodando na porta ${process.env.PORT || 3000}`));

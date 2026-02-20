@@ -36,7 +36,7 @@ client.once('ready', async () => {
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
     if (interaction.commandName === 'ping') {
-        await interaction.reply('WebHyperTD2 online!');
+        await interaction.reply('esse comando e inutil imbecil');
     }
 });
 
@@ -305,7 +305,7 @@ client.on('messageCreate', async (message) => {
             title: 'Aviso Recebido',
             description: `**Servidor:** ${message.guild.name}\n**Razão:** ${reason}\n**Moderador:** ${message.author.tag}`,
             timestamp: new Date(),
-            footer: { text: 'Moderação do WebHyperTD2' }
+            footer: { text: 'adm' }
         };
         try {
             await member.send({ embeds: [warnEmbed] });
@@ -370,9 +370,9 @@ client.on('messageCreate', async (message) => {
             await channel.delete();
             await newChannel.setPosition(position);
             if (parent) await newChannel.setParent(parent);
-            newChannel.send('Canal nukado e recriado! Tudo limpo.');
+            newChannel.send('canal moggado');
         } catch {
-            message.reply('Erro ao nukar.');
+            message.reply('vc n é digno de usar nuke, plebe imundo');
         }
     }
 });
